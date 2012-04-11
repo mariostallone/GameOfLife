@@ -30,7 +30,7 @@ public class CellTest {
         this.cell = new Cell();
         this.neighbours = new ArrayList<Cell>();
         this.count = 0;
-                for(int i =0;i<7;i++)
+        for(int i =0;i<7;i++)
         {
             if(i!=4)
             {
@@ -54,7 +54,7 @@ public class CellTest {
     public void testNoOfAliveNeighbours()
     {
         System.out.println("testNoOfAliveNeighbours");
-        assertEquals(count, cell.getNoOfAliveNeighbours());
+        assertEquals(count, cell.getNewNoOfAliveNeighbours());
     }
     
     @Test
@@ -70,9 +70,9 @@ public class CellTest {
                 break;
             }
         }
-        assertEquals(count, cell.getNoOfAliveNeighbours());
+        assertEquals(count, cell.getNewNoOfAliveNeighbours());
     }
-        @Test
+    @Test
     public void testNoOfAliveNeighboursAfterSettingOneDeadNeighbourAlive()
     {
         System.out.println("testNoOfAliveNeighboursAfterSettingOneDeadNeighbourAlive");
@@ -85,6 +85,42 @@ public class CellTest {
                 break;
             }
         }
-        assertEquals(count, cell.getNoOfAliveNeighbours());
+        assertEquals(count, cell.getNewNoOfAliveNeighbours());
+    }
+    @Test
+    public void testIfStatehasChangedWhenAliveCellIsLonely()
+    {
+        System.out.println("testIfStatehasChangedWhenAliveCellIsLonely");
+        cell.setState(new Alive());
+        cell.setNewNoOfAliveNeighbours(1);
+        cell.stepUp();
+        assertEquals(Dead.class, cell.getState().getClass());
+    }
+    @Test
+    public void testIfStatehasChangedWhenAliveCellIsOverCrowded()
+    {
+        System.out.println("testIfStatehasChangedWhenAliveCellIsOverCrowded");
+        cell.setState(new Alive());
+        cell.setNewNoOfAliveNeighbours(4);
+        cell.stepUp();
+        assertEquals(Dead.class, cell.getState().getClass());
+    }
+    @Test
+    public void testIfStatehasChangedWhenAliveCellIsHappy()
+    {
+        System.out.println("testIfStatehasChangedWhenAliveCellIsHappy");
+        cell.setState(new Alive());
+        cell.setNewNoOfAliveNeighbours(2);
+        cell.stepUp();
+        assertEquals(Alive.class, cell.getState().getClass());
+    }
+    @Test
+    public void testIfStatehasChangedWhenDeadCellIsHappy()
+    {
+        System.out.println("testIfStatehasChangedWhenDeadCellIsHappy");
+        cell.setState(new Dead());
+        cell.setNewNoOfAliveNeighbours(3);
+        cell.stepUp();
+        assertEquals(Alive.class, cell.getState().getClass());
     }
 }

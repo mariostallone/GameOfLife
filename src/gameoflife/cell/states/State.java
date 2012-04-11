@@ -12,4 +12,5 @@ import gameoflife.cell.Cell;
  */
 public interface State {
     public void changeNoOfAliveNeighbours(Cell currentCell);
+    public void stepUp(Cell currentCell);
 }

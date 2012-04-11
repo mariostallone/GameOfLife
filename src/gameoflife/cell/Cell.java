@@ -12,12 +12,12 @@ import java.util.Observer;
 public class Cell  extends Observable implements Observer
 {
     private State state; //Specified the state of the Cell - Dead or Alive
-    private Integer noOfAliveNeighbours; //Holds the count of alive neighbours
-    
+    private Integer newNoOfAliveNeighbours; //Holds the count of alive neighbours
+    private Integer oldNoOfAliveNeighbours;
     public Cell() 
     {
         this.state = new Dead();
-        this.noOfAliveNeighbours = 0;
+        this.newNoOfAliveNeighbours = 0;
     }
     
     /**
@@ -34,12 +34,25 @@ public class Cell  extends Observable implements Observer
     {
         neighbour.getState().changeNoOfAliveNeighbours(this);
     }
-    // Getters and Setters
-    public Integer getNoOfAliveNeighbours() {
-        return noOfAliveNeighbours;
+    
+    public void stepUp()
+    {
+        this.setOldNoOfAliveNeighbours(newNoOfAliveNeighbours);
+        this.getState().stepUp(this);
     }
-    public void setNoOfAliveNeighbours(Integer noOfAliveNeighbours) {
-        this.noOfAliveNeighbours = noOfAliveNeighbours;
+    // Getters and Setters
+    public Integer getNewNoOfAliveNeighbours() {
+        return newNoOfAliveNeighbours;
+    }
+    public void setNewNoOfAliveNeighbours(Integer noOfAliveNeighbours) {
+        this.newNoOfAliveNeighbours = noOfAliveNeighbours;
+    }
+        public Integer getOldNoOfAliveNeighbours() {
+        return oldNoOfAliveNeighbours;
+    }
+
+    public void setOldNoOfAliveNeighbours(Integer oldNoOfAliveNeighbours) {
+        this.oldNoOfAliveNeighbours = oldNoOfAliveNeighbours;
     }
     public State getState() {
         return state;
