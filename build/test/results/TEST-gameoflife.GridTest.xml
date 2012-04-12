@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="Marios-Mac-Pro.local" name="gameoflife.axis.AxisTest" tests="3" time="0.138" timestamp="2012-04-12T19:23:27">
+<testsuite errors="0" failures="0" hostname="Marios-Mac-Pro.local" name="gameoflife.GridTest" tests="2" time="0.14" timestamp="2012-04-12T19:23:26">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="US" />
@@ -70,7 +70,7 @@
     <property name="manifest.available+main.class" value="true" />
     <property name="libs.spring-webmvc3.0.maven-pom" value="" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner gameoflife.axis.AxisTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/mario/NetBeansProjects/GameOfLife/build/test/results/TEST-gameoflife.axis.AxisTest.xml crashfile=/Users/mario/NetBeansProjects/GameOfLife/build/junitvmwatcher5349467857075396126.properties propsfile=/Users/mario/NetBeansProjects/GameOfLife/build/junit7483155820005578473.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner gameoflife.GridTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/mario/NetBeansProjects/GameOfLife/build/test/results/TEST-gameoflife.GridTest.xml crashfile=/Users/mario/NetBeansProjects/GameOfLife/build/junitvmwatcher4449492152899845769.properties propsfile=/Users/mario/NetBeansProjects/GameOfLife/build/junit8239726219861574136.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -450,12 +450,24 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="apple.awt.CToolkit" />
   </properties>
-  <testcase classname="gameoflife.axis.AxisTest" name="testInitialState" time="0.0050" />
-  <testcase classname="gameoflife.axis.AxisTest" name="testAfterSettingOneCellAsAlive" time="0.0030" />
-  <testcase classname="gameoflife.axis.AxisTest" name="testAfterSettingAliveCellAsDead" time="0.0" />
-  <system-out><![CDATA[testInitialState
-testAfterSettingOneCellAsAlive
-Observed Object : gameoflife.cell.Cell@4ac9131ctestAfterSettingOneCellAsAlive
+  <testcase classname="gameoflife.GridTest" name="testEmptyGridCreation" time="0.016" />
+  <testcase classname="gameoflife.GridTest" name="testAddingObservers" time="0.0030" />
+  <system-out><![CDATA[testEmptyGridCreation
+testAddingObservers
+Grid Size : 5
+createGrid
+XX-
+X-X
+-X-
+END
+-----
+-XX--
+-X-X-
+--X--
+-----
+-XX--
+-X-X-
+--X--
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
