@@ -3,7 +3,6 @@ package gameoflife;
 import gameoflife.axis.Axis;
 import gameoflife.cell.Cell;
 import gameoflife.cell.states.Alive;
-import gameoflife.cell.states.Dead;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -14,7 +13,6 @@ import java.util.Stack;
  */
 public class Grid {
     private List<Axis> rows;
-    private List<Axis> columns;
     public void instantiateEmptyGrid(String[] input)
     {
         rows =  new Stack<Axis>();
@@ -30,7 +28,7 @@ public class Grid {
             axis.setObserver();
             rows.add(axis);
         }
-        System.out.println("Rows : "+rows.size()+"Columns : "+rows.get(0).getCells().size());
+        //System.out.println("Rows : "+rows.size()+"Columns : "+rows.get(0).getCells().size());
         addObservers();
         createGrid(input);
         setCellInfo();
@@ -52,42 +50,11 @@ public class Grid {
                 if(x<xLimit&&y>0) cell.addObserver(rows.get(x+1).getCells().get(y-1));
                 if(x<xLimit) cell.addObserver(rows.get(x+1).getCells().get(y));
                 if(x<xLimit&&y<yLimit) cell.addObserver(rows.get(x+1).getCells().get(y+1));
-                //iterateObservers(cell, x, y);
             }
         }
-    }
-    private void iterateObservers(Cell cell,int x, int y)
-    {
-        int startX = x-1; if(startX<0) startX=0;
-        int endX = x+1; if(endX>=rows.get(x).getCells().size()) endX = rows.get(x).getCells().size()-1;
-        int startY = y-1; if(startY<0) startY = 0;
-        int endY = y+1; if(endY>=rows.size()) endY = rows.size()-1;
-        /*int startX = ((x-1)<0) ? 0 : x-1;
-        int endX = ((x+1)>=rows.get(x).getCells().size()) ? 
-                rows.get(x).getCells().size()-1:x+1;
-        int startY = ((y-1)<0) ? 0 : y-1;
-        int endY = ((y+1)>=rows.size()) ? rows.size()-1:y+1;*/
-        int count = 0;
-        //System.out.println("Iteration  : "+x+","+y);
-        //System.out.println("From : "+startX+","+startY+"To : "+endX+","+endY);
-        for(int i=startY;i<=endY;i++)
-        {
-            for(int j=startX;j<=endX;j++)
-            {
-                System.out.println("("+i+","+j+")"+"Row : "+rows.get(i).getCells().size());
-                Cell neighbour = rows.get(i).getCells().get(j);
-                if(!cell.equals(neighbour))
-                neighbour.addObserver(cell);count++;
-            }
-        }
-        //System.out.print("Cell : "+cell+"Observers : "+count+"State : ");
-        //if(cell.getState().getClass()==Alive.class) System.out.print("Alive");
-        //else System.out.print("Dead");
-        //System.out.println();
     }
     public void createGrid(String[] input)
     {
-        System.out.println("createGrid");
         int x=0,y=0;
         for(String line : input)
         {
@@ -100,13 +67,10 @@ public class Grid {
                 {
                     cells.get(y).setState(new Alive());
                 }
-                System.out.print(character);
                 y++;
             }
-            System.out.println();
             x++;
         }
-        System.out.println("END");
     }
     public void setCellInfo()
     {
@@ -114,31 +78,114 @@ public class Grid {
         {
             for(Cell cell: axis.getCells())
             {
-                System.out.println("Cell : "+cell+" Alive : "+cell.getNewNoOfAliveNeighbours());
                 cell.setOldNoOfAliveNeighbours(cell.getNewNoOfAliveNeighbours());
             }
         }
     }
     public void stepUp()
-    {
-        int flag=0;
+    { 
+        Axis topRow = instantiateNewRow(0);
+        Axis bottomRow = instantiateNewRow(rows.size()-1);
+        List<Cell> leftColumn = instantiateNewColumn(0);
+        List<Cell> rightColumn = instantiateNewColumn(rows.get(0).getCells().size()-1);
         for(Axis axis : rows)
         {
-            if(axis.getNewNoOfAliveCells()>3)
-            {
-                for(Cell cell : axis.getCells())
-                {
-                    if(cell.getState().getClass()==Alive.class) {
-                        flag++;
-                        continue;
-                    }
-                    flag=0;
-                }
-            }
             axis.stepUp();
         }
+        //System.out.println("Top Row :"+topRow+" Bottom Row : "+bottomRow);
+        if(topRow!=null) rows.add(0,topRow);
+        if(bottomRow!=null) rows.add(bottomRow);
+        int index=0;
+        if(leftColumn!=null) insertNewColumn(leftColumn, index);
+        index = rows.get(0).getCells().size();
+        if(rightColumn!=null) insertNewColumn(rightColumn, index);
+        String []stringArray = gridToStringArray();
+        //System.out.println(stringArray);
+        instantiateEmptyGrid(stringArray);
     }
-    public String[] printGrid()
+    public Axis instantiateNewRow(int i)
+    {
+        int flag=0;int index=-1;
+        Axis newRow = null;
+        Axis tempRow = rows.get(i);
+        {
+            for(Cell cell : tempRow.getCells())
+            {
+                index++;
+                if(cell.getState().getClass()==Alive.class)
+                {  
+                    flag++;
+                    if(flag==3) break;
+                    continue;
+                }
+                flag=0;
+            }
+        }
+        //System.out.println("Index"+index+"i"+i+"flag"+flag);
+        index--;
+        if(flag==3)
+        {
+            newRow = new Axis();
+            List<Cell> cells = new Stack<Cell>();
+            newRow.setCells(cells);
+            for(int x=0;x<tempRow.getCells().size();x++)
+            {
+                Cell cell = new Cell();
+                cells.add(cell);
+                if(x==index)
+                {
+                    cell.setState(new Alive());
+                }
+            }
+        }
+        return newRow;
+    }
+    public List<Cell> instantiateNewColumn(int i)
+    {
+        List<Cell> tempColumn = new ArrayList<Cell>();
+        List<Cell> newColumn = null;
+        for(Axis axis : rows)
+        {
+            tempColumn.add(axis.getCells().get(i));
+        }
+        int flag=0;int index=-1;
+        for(Cell cell : tempColumn)
+        {
+            index++;
+            if(cell.getState().getClass()==Alive.class)
+            {  
+                flag++;
+                if(flag==3) break;
+                continue;
+            }
+            flag=0;
+        }
+        index--;
+        if(flag==3)
+        {
+            newColumn = new ArrayList<Cell>();
+            for(int x=0;x<tempColumn.size();x++)
+            {
+                Cell cell = new Cell();
+                newColumn.add(cell);
+                if(x==index)
+                {
+                    cell.setState(new Alive());
+                }
+            }
+        }
+        return newColumn;
+    }
+    public void insertNewColumn(List<Cell> column, int index)
+    {
+        int x=0;
+        for(Axis axis : rows)
+        {
+            axis.getCells().add(index, column.get(x));
+            x++;
+        }
+    }
+    public String[] gridToStringArray()
     {
         List<String> stringArray = new ArrayList<String>();
         for(Axis axis : rows)
@@ -154,9 +201,18 @@ public class Grid {
                 element.append('-');
             }
             stringArray.add(element.toString());  
-            System.out.println(element);
+            //System.out.println(element);
         }
+        //System.out.println("Size "+stringArray.size());
         return stringArray.toArray(new String[0]);
+    }
+    public void printGrid()
+    {
+        String[]strArray = gridToStringArray();
+        for(String row : strArray)
+        {
+            System.out.println(row);
+        }
     }
     public List<Axis> getRows() {
         return rows;
@@ -164,13 +220,5 @@ public class Grid {
 
     public void setRows(List<Axis> rows) {
         this.rows = rows;
-    }
-    
-    public List<Axis> getColumns() {
-        return columns;
-    }
-
-    public void setColumns(List<Axis> columns) {
-        this.columns = columns;
     }
 }

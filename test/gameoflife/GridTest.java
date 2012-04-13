@@ -5,9 +5,7 @@
 package gameoflife;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -27,22 +25,6 @@ public class GridTest {
     @After
     public void tearDown() {
     }
-//    @Test
-//    public void testAddingObservers()
-//    {
-//        System.out.println("testAddingObservers");
-//        //String[] input = {"XX-","X-X","-X-"};
-//        String[] input = {"-X-","-X-","-X-"};
-//        //String[] input = {"XX","XX"};
-//        instance.instantiateEmptyGrid(input);
-//        System.out.println("Grid Size : "+instance.getRows().size());
-//        instance.addObservers();
-//        instance.createGrid(input);
-//        instance.printGrid();
-//        System.out.println("New Generation");
-//        instance.stepUp();
-//        instance.printGrid();
-//    }
     @Test
     public void testBlockPattern()
     {
@@ -50,10 +32,10 @@ public class GridTest {
         String[] input = {"XX","XX"};
         instance.instantiateEmptyGrid(input);
         instance.printGrid();
-        System.out.println("New Generation");
+        System.out.println("Next Generation");
         instance.stepUp();
         instance.printGrid();
-        assertArrayEquals(input, instance.printGrid());
+        assertArrayEquals(input, instance.gridToStringArray());
     }
     @Test
     public void testBoatPattern()
@@ -62,10 +44,10 @@ public class GridTest {
         String[] input = {"XX-","X-X","-X-"};
         instance.instantiateEmptyGrid(input);
         instance.printGrid();
-        System.out.println("New Generation");
+        System.out.println("Next Generation");
         instance.stepUp();
         instance.printGrid();
-        assertArrayEquals(input, instance.printGrid());
+        assertArrayEquals(input, instance.gridToStringArray());
     }
     @Test
     public void testBlinkerPattern()
@@ -75,20 +57,35 @@ public class GridTest {
         String[] expected = {"---","XXX","---"};
         instance.instantiateEmptyGrid(input);
         instance.printGrid();
-        System.out.println("New Generation");
+        System.out.println("Next Generation");
         instance.stepUp();
         instance.printGrid();
-        assertArrayEquals(expected, instance.printGrid());
+        assertArrayEquals(expected, instance.gridToStringArray());
     }
     @Test
     public void testToadPattern()
     {
         System.out.println("testToadPattern");
         String[] input = {"-XXX","XXX-"};
+        String[] expected = {"--X-","X--X","X--X","-X--"};
         instance.instantiateEmptyGrid(input);
         instance.printGrid();
-        System.out.println("New Generation");
+        System.out.println("Next Generation");
         instance.stepUp();
         instance.printGrid();
+        assertArrayEquals(expected, instance.gridToStringArray());
+    }
+    @Test
+    public void testVerticalToadPattern()
+    {
+        System.out.println("testVerticalToadPattern");
+        String[] input = {"X-","XX","XX","-X"};
+        String[] expected = {"-XX-","X---","---X","-XX-"};
+        instance.instantiateEmptyGrid(input);
+        instance.printGrid();
+        System.out.println("Next Generation");
+        instance.stepUp();
+        instance.printGrid();
+        assertArrayEquals(expected, instance.gridToStringArray());
     }
 }

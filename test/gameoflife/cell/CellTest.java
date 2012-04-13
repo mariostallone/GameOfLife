@@ -110,7 +110,7 @@ public class CellTest {
     {
         System.out.println("testIfStatehasChangedWhenAliveCellIsHappy");
         cell.setState(new Alive());
-        cell.setNewNoOfAliveNeighbours(2);
+        cell.setOldNoOfAliveNeighbours(2);
         cell.stepUp();
         assertEquals(Alive.class, cell.getState().getClass());
     }
@@ -119,7 +119,7 @@ public class CellTest {
     {
         System.out.println("testIfStatehasChangedWhenDeadCellIsHappy");
         cell.setState(new Dead());
-        cell.setNewNoOfAliveNeighbours(3);
+        cell.setOldNoOfAliveNeighbours(3);
         cell.stepUp();
         assertEquals(Alive.class, cell.getState().getClass());
     }

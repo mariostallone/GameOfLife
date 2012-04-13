@@ -38,7 +38,6 @@ public class Axis implements Observer
     @Override
     public void update(Observable o, Object arg) 
     {
-        System.out.print("Observed Object : "+o);
         Cell cell = (Cell)o;
         if(cell.getState().getClass()==Alive.class)
         {
