@@ -17,7 +17,7 @@ public class Dead implements State
     public void changeNoOfAliveNeighbours(Cell currentCell) 
     {
         int temp = currentCell.getNewNoOfAliveNeighbours();
-        currentCell.setNewNoOfAliveNeighbours(--temp);
+        if(temp>0) currentCell.setNewNoOfAliveNeighbours(--temp);
     }
 
     @Override

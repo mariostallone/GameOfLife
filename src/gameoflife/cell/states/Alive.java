@@ -15,8 +15,8 @@ public class Alive implements State
     @Override
     public void changeNoOfAliveNeighbours(Cell currentCell) 
     {
-        int temp = currentCell.getNewNoOfAliveNeighbours();
-        currentCell.setNewNoOfAliveNeighbours(++temp);
+        int temp = currentCell.getNewNoOfAliveNeighbours()+1;
+        currentCell.setNewNoOfAliveNeighbours(temp);
     }
 
     @Override

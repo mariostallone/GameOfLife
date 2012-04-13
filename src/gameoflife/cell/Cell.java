@@ -1,7 +1,10 @@
 package gameoflife.cell;
 
+import gameoflife.cell.states.Alive;
 import gameoflife.cell.states.Dead;
 import gameoflife.cell.states.State;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,6 +21,7 @@ public class Cell  extends Observable implements Observer
     {
         this.state = new Dead();
         this.newNoOfAliveNeighbours = 0;
+        this.oldNoOfAliveNeighbours = 0;
     }
     
     /**
@@ -34,10 +38,10 @@ public class Cell  extends Observable implements Observer
     {
         neighbour.getState().changeNoOfAliveNeighbours(this);
     }
-    
     public void stepUp()
     {
-        this.setOldNoOfAliveNeighbours(newNoOfAliveNeighbours);
+        //this.setOldNoOfAliveNeighbours(newNoOfAliveNeighbours);
+        System.out.println("Observers :"+this.countObservers()+" Alive : "+this.newNoOfAliveNeighbours);
         this.getState().stepUp(this);
     }
     // Getters and Setters
@@ -60,6 +64,10 @@ public class Cell  extends Observable implements Observer
     public void setState(State state) {
         if(this.state.getClass()!=state.getClass())
         {
+            if(state.getClass()==Dead.class)
+            {
+                System.out.println("becoming Dead");
+            }
             this.state = state;
             this.setChanged();
             this.notifyObservers();

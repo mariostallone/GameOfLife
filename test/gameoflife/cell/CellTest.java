@@ -30,7 +30,7 @@ public class CellTest {
         this.cell = new Cell();
         this.neighbours = new ArrayList<Cell>();
         this.count = 0;
-        for(int i =0;i<7;i++)
+        for(int i =0;i<9;i++)
         {
             if(i!=4)
             {

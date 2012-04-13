@@ -51,8 +51,11 @@ public class Axis implements Observer
     }
     public void stepUp()
     {
+        //System.out.println("Axis : "+newNoOfAliveCells);
+        this.oldNoOfAliveCells = newNoOfAliveCells;
         for(Cell cell : cells)
         {
+            //cell.setOldNoOfAliveNeighbours(cell.getNewNoOfAliveNeighbours());
             cell.stepUp();
         }
     }
