@@ -27,7 +27,6 @@ public class Grid {
             }
             rows.add(axis);
         }
-        //System.out.println("Rows : "+rows.size()+"Columns : "+rows.get(0).getCells().size());
         addObservers();
         createGrid(input);
         setCellInfo();
@@ -91,7 +90,6 @@ public class Grid {
         {
             axis.stepUp();
         }
-        //System.out.println("Top Row :"+topRow+" Bottom Row : "+bottomRow);
         if(topRow!=null) rows.add(0,topRow);
         if(bottomRow!=null) rows.add(bottomRow);
         int index=0;
@@ -99,7 +97,6 @@ public class Grid {
         index = rows.get(0).getCells().size();
         if(rightColumn!=null) insertNewColumn(rightColumn, index);
         String []stringArray = gridToStringArray();
-        //System.out.println(stringArray);
         instantiateEmptyGrid(stringArray);
     }
     public Axis instantiateNewRow(int i)
@@ -120,7 +117,6 @@ public class Grid {
                 flag=0;
             }
         }
-        //System.out.println("Index"+index+"i"+i+"flag"+flag);
         index--;
         if(flag==3)
         {
@@ -200,9 +196,7 @@ public class Grid {
                 element.append('-');
             }
             stringArray.add(element.toString());  
-            //System.out.println(element);
         }
-        //System.out.println("Size "+stringArray.size());
         return stringArray.toArray(new String[0]);
     }
     public void printGrid()
@@ -213,6 +207,8 @@ public class Grid {
             System.out.println(row);
         }
     }
+    
+    // Getters and Setters
     public List<Axis> getRows() {
         return rows;
     }

@@ -40,7 +40,6 @@ public class Cell  extends Observable implements Observer
     }
     public void stepUp()
     {
-        //System.out.println("Observers :"+this.countObservers()+" Alive : "+this.newNoOfAliveNeighbours);
         this.getState().stepUp(this);
     }
     // Getters and Setters

@@ -1,15 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameoflife.axis;
 
 import gameoflife.cell.Cell;
-import gameoflife.cell.states.Alive;
-import gameoflife.cell.states.Dead;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Stack;
 
 /**
@@ -26,7 +18,6 @@ public class Axis
     }
     public void stepUp()
     {
-        //System.out.println("Axis : "+newNoOfAliveCells);
         for(Cell cell : cells)
         {
             cell.stepUp();
