@@ -14,6 +14,12 @@ public class GameOfLife {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        String[] input = {"XX-","X-X","-X-"};
+        Grid grid = new Grid();
+        grid.instantiateEmptyGrid(input);
+        grid.printGrid();
+        System.out.println("Next Generation");
+        grid.stepUp();
+        grid.printGrid();
     }
 }
