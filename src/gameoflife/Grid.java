@@ -84,7 +84,8 @@ public class Grid {
         Axis topRow = instantiateNewRow(0);
         Axis bottomRow = instantiateNewRow(rows.size()-1);
         List<Cell> leftColumn = instantiateNewColumn(0);
-        List<Cell> rightColumn = instantiateNewColumn(rows.get(0).getCells().size()-1);
+        int rightColumnIndex = rows.get(0).getCells().size()-1;
+        List<Cell> rightColumn = instantiateNewColumn(rightColumnIndex);
         int index=0;
         for(Axis axis : rows)
         {
@@ -101,35 +102,38 @@ public class Grid {
     public Axis instantiateNewRow(int i)
     {
         int flag=0;int index=-1;
-        Axis newRow = null;
         Axis tempRow = rows.get(i);
+        for(Cell cell : tempRow.getCells())
         {
-            for(Cell cell : tempRow.getCells())
-            {
-                index++;
-                if(cell.getState().getClass()==Alive.class)
-                {  
-                    flag++;
-                    if(flag==3) break;
-                    continue;
-                }
-                flag=0;
+            index++;
+            if(cell.getState().getClass()==Alive.class)
+            {  
+                flag++;
+                if(flag==3) break;
+                continue;
             }
+            flag=0;
         }
         index--;
         if(flag==3)
         {
-            newRow = new Axis();
-            List<Cell> cells = new ArrayList<Cell>();
-            newRow.setCells(cells);
-            for(int x=0;x<tempRow.getCells().size();x++)
+            return createAxisObject(tempRow.getCells().size(),index);
+        }
+        return null;
+    }
+    private Axis createAxisObject(int size,int index)
+    {
+        Axis newRow = null;
+        newRow = new Axis();
+        List<Cell> cells = new ArrayList<Cell>();
+        newRow.setCells(cells);
+        for(int x=0;x<size;x++)
+        {
+            Cell cell = new Cell();
+            cells.add(cell);
+            if(x==index)
             {
-                Cell cell = new Cell();
-                cells.add(cell);
-                if(x==index)
-                {
-                    cell.setState(new Alive());
-                }
+                cell.setState(new Alive());
             }
         }
         return newRow;
@@ -137,7 +141,6 @@ public class Grid {
     public List<Cell> instantiateNewColumn(int i)
     {
         List<Cell> tempColumn = new ArrayList<Cell>();
-        List<Cell> newColumn = null;
         for(Axis axis : rows)
         {
             tempColumn.add(axis.getCells().get(i));
@@ -157,15 +160,21 @@ public class Grid {
         index--;
         if(flag==3)
         {
-            newColumn = new ArrayList<Cell>();
-            for(int x=0;x<tempColumn.size();x++)
+            return createColumn(tempColumn.size(), index);
+        }
+        return null;
+    }
+    private List<Cell> createColumn(int size,int index)
+    {
+        List<Cell> newColumn = null;
+        newColumn = new ArrayList<Cell>();
+        for(int x=0;x<size;x++)
+        {
+            Cell cell = new Cell();
+            newColumn.add(cell);
+            if(x==index)
             {
-                Cell cell = new Cell();
-                newColumn.add(cell);
-                if(x==index)
-                {
-                    cell.setState(new Alive());
-                }
+                cell.setState(new Alive());
             }
         }
         return newColumn;
