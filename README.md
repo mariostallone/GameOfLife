@@ -34,3 +34,6 @@ Unit Tests
 ----------
 Unit Tests have been written for the two main functional units - Cell and Grid.
 These can be run from the command line via ant.
+
+ant test -> will run the junit tests
+ant run -> will run the Project
