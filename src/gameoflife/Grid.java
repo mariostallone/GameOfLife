@@ -25,7 +25,6 @@ public class Grid {
             {
                 row.add(new Cell());
             }
-            axis.setObserver();
             rows.add(axis);
         }
         //System.out.println("Rows : "+rows.size()+"Columns : "+rows.get(0).getCells().size());
