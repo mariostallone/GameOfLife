@@ -1,3 +1,4 @@
+
 package gameoflife.cell.states;
 
 import gameoflife.cell.Cell;

@@ -2,7 +2,7 @@ package gameoflife.axis;
 
 import gameoflife.cell.Cell;
 import java.util.List;
-import java.util.Stack;
+import java.util.ArrayList;
 
 /**
  *
@@ -11,10 +11,9 @@ import java.util.Stack;
 public class Axis
 {
     private List<Cell> cells;
-    @SuppressWarnings("LeakingThisInConstructor")
     public Axis() 
     {
-        cells = new Stack<Cell>();
+        cells = new ArrayList<Cell>();
     }
     public void stepUp()
     {

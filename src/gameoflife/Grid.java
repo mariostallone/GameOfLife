@@ -5,7 +5,6 @@ import gameoflife.cell.Cell;
 import gameoflife.cell.states.Alive;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  *
@@ -15,11 +14,11 @@ public class Grid {
     private List<Axis> rows;
     public void instantiateEmptyGrid(String[] input)
     {
-        rows =  new Stack<Axis>();
+        rows =  new ArrayList<Axis>();
         for(int x=0;x<input.length;x++)
         {
             Axis axis = new Axis();
-            List<Cell> row = new Stack<Cell>();
+            List<Cell> row = new ArrayList<Cell>();
             axis.setCells(row);
             for(int y=0;y<input[0].length();y++)
             {
@@ -86,13 +85,13 @@ public class Grid {
         Axis bottomRow = instantiateNewRow(rows.size()-1);
         List<Cell> leftColumn = instantiateNewColumn(0);
         List<Cell> rightColumn = instantiateNewColumn(rows.get(0).getCells().size()-1);
+        int index=0;
         for(Axis axis : rows)
         {
             axis.stepUp();
         }
         if(topRow!=null) rows.add(0,topRow);
         if(bottomRow!=null) rows.add(bottomRow);
-        int index=0;
         if(leftColumn!=null) insertNewColumn(leftColumn, index);
         index = rows.get(0).getCells().size();
         if(rightColumn!=null) insertNewColumn(rightColumn, index);
@@ -121,7 +120,7 @@ public class Grid {
         if(flag==3)
         {
             newRow = new Axis();
-            List<Cell> cells = new Stack<Cell>();
+            List<Cell> cells = new ArrayList<Cell>();
             newRow.setCells(cells);
             for(int x=0;x<tempRow.getCells().size();x++)
             {
@@ -184,20 +183,24 @@ public class Grid {
     {
         List<String> stringArray = new ArrayList<String>();
         for(Axis axis : rows)
-        {
-            StringBuilder element = new StringBuilder();
-            for(Cell cell : axis.getCells())
-            {
-                if(cell.getState().getClass()==Alive.class)
-                {
-                    element.append('X');
-                    continue;
-                }
-                element.append('-');
-            }
-            stringArray.add(element.toString());  
+        { 
+            stringArray.add(rowToString(axis));  
         }
         return stringArray.toArray(new String[0]);
+    }
+    private String rowToString(Axis axis)
+    {
+        StringBuilder element = new StringBuilder();
+        for(Cell cell : axis.getCells())
+        {
+            if(cell.getState().getClass()==Alive.class) 
+            {
+                element.append('X');
+                continue;
+            } 
+            element.append('-');
+        }
+        return element.toString();
     }
     public void printGrid()
     {
@@ -206,8 +209,7 @@ public class Grid {
         {
             System.out.println(row);
         }
-    }
-    
+    }  
     // Getters and Setters
     public List<Axis> getRows() {
         return rows;
